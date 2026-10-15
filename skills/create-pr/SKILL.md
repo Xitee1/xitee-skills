@@ -1,6 +1,6 @@
 ---
 name: create-pr
-description: Create a pull request whose description is the review — written for reviewers who will not read the diff. Documents every change as before → after (logic, design, behavior), every decision made in the session incl. rejected alternatives, everything kept for compatibility or worked around (legacy paths, dual endpoints, deferred cleanups), impact and risks, what is out of scope, how it was verified and what to check manually. Fixed section schema, identical across projects. Always opens the PR as a draft. Use whenever the user asks to create/open/write a PR, pull request or MR, to write or improve a PR description, or when a branch is ready to be handed over for review.
+description: Create a pull request whose description is the review — written for reviewers who will not read the diff. Documents every change as before → after (logic, design, behavior), every decision made in the session incl. rejected alternatives, everything kept for compatibility or worked around (legacy paths, dual endpoints, deferred cleanups), impact and risks, what is out of scope, how it was verified and what to check manually. Fixed section schema, identical across projects. Creates the PR directly as a draft, without a preview, unless the user asks otherwise. Use whenever the user asks to create/open/write a PR, pull request or MR, to write or improve a PR description, or when a branch is ready to be handed over for review.
 ---
 
 # Create a pull request
@@ -149,24 +149,28 @@ cases the tests cannot cover. Derived from sections 2, 3 and 5.
 Conventional commit, imperative, lower-case, ≤ 72 chars: `type(scope): summary`, e.g.
 `fix(mdatasvc): tolerate stale app role assignments`.
 
-## 4. Use direct Draft-PR instructions as approval
+## 4. A request for a PR is the approval
 
-When the user directly instructs you to create a Draft PR (e.g. "Erstelle einen Draft-PR" or
-"mach ein draft pr"), that instruction authorizes creation. Complete steps 1–3, then create the
-Draft PR directly without showing a title/body preview or asking for another confirmation.
-Honor an explicit request to preview or approve the text first.
+When the user asks for a PR, in whatever words ("erstell einen PR", "commit und PR",
+"mach ein draft pr", `/commit-branch-pr`), that request authorizes creating it. "PR" and
+"Draft PR" mean the same: a draft. Complete steps 1–3, then create the PR right away:
 
-Otherwise, show title + full body to the user and **wait** for explicit approval before creation.
-An answer to a side question is not approval. Offer that the user edits the text themselves.
+- no title/body preview, no confirmation question
+- as a draft, unless the user explicitly asks for a regular PR (e.g. "ohne Draft", "not as a draft")
+- a preview only when the user explicitly asks for one (e.g. "zeig mir erst den Text"); then wait
+  for approval
 
-## 5. Create — always as draft
+The user reviews and edits the text in the PR itself.
+
+## 5. Create — as a draft
 
 ```bash
 gh pr create --draft --base <base> --head <branch> --title '<title>' --body-file <file>
 ```
 
-(prefix `GH_HOST=<host>` and add `-R <owner>/<repo>` on GHE.) Never mark ready-for-review unless the
-user explicitly asks. Report the URL.
+(prefix `GH_HOST=<host>` and add `-R <owner>/<repo>` on GHE.) Leave out `--draft` only when the user
+explicitly asked for a regular PR. Never mark ready-for-review unless the user explicitly asks.
+Report the URL.
 
 ## 6. Keep it in sync
 
@@ -183,7 +187,7 @@ description is worse than none because the reviewer trusts it.
 - [ ] All eight sections present, in order, verbatim headings; `None.` where empty
 - [ ] Issue reference uses an English keyword (`Fixes #123`) even in a German body
 - [ ] Verification lists only what actually ran
-- [ ] Creation authorized by a direct Draft-PR instruction, or title/body explicitly approved after preview
-- [ ] Created with `--draft`
+- [ ] Created right after the user's request, without a preview (unless they asked for one)
+- [ ] Created with `--draft` (unless the user explicitly asked for a regular PR)
 
 See `references/example.md` for a complete filled-in example.

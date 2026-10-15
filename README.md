@@ -16,7 +16,7 @@
 ## Contents
 
 ### Skills
-- `create-pr` — reviewer-oriented PR descriptions in a fixed schema (why, before → after, design decisions, impact & risks, out of scope, verification, manual checks). Always opens the PR as a draft.
+- `create-pr` — reviewer-oriented PR descriptions in a fixed schema (why, before → after, design decisions, impact & risks, out of scope, verification, manual checks). Creates the PR directly as a draft, without a preview.
 
 ### Commands
 - `/bump-version` — bump patch/minor/major in the project's version file.
